@@ -4,3 +4,9 @@ h1 {
   text-align: center;
 }
 
+#grid-container {
+  display: grid;
+  width: 500px;
+  height: 500px;
+}
+
