@@ -7,6 +7,9 @@ const clearBtn = document.getElementById("clearBtn");
 const sizeValue = document.getElementById("sizeValue");
 const sizeSlider = document.getElementById("sizeSlider");
 
+let color = "#333333";
+let girdsize = 16;
+
 function makegrid(size) {
   container.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
   container.style.gridTemplateRows = `repeat(${size}, 1fr)`;
@@ -14,16 +17,57 @@ function makegrid(size) {
     let grid = document.createElement("div");
     grid.classList.add("grid-container");
     container.appendChild(grid);
-    grid.style.backgroundColor = "blue";
+    grid.style.backgroundColor = "White";
+    grid.addEventListener("mousedown", changeColor)
+    grid.addEventListener("mouseover", changeColor)
   }
 }
 
-makegrid(16)
+makegrid(16);
 
-function changeSize() {
- let newSize = sizeSlider.value;
- sizeValue.innerHTML = `${newSize} X ${newSize}`;
- console.log(newSize)
+// change grid color
+
+function changeColor() {
+  this.style.backgroundColor = color
 }
 
-changeSize()
+// change gridSize
+
+sizeSlider.oninput = function () {
+  girdsize = this.value;
+  sizeValue.innerHTML = `${girdsize} X ${girdsize}`;
+  makegrid(girdsize);
+}
+
+// color Picker
+
+colorPicker.oninput = function () {
+  let defaultColor = colorBtn.value;
+  let newColor = this.value;
+  console.log(newColor);
+  if (newColor !== defaultColor) {
+    color = newColor
+  }
+}
+
+//Buttons
+
+colorBtn.onclick = function () {
+  color = "#333333";
+}
+
+eraserBtn.onclick = function () {
+  color = "White";
+}
+
+clearBtn.onclick = function() {
+  container.innerHTML = "";
+  makegrid(girdsize);
+}
+
+rainbowBtn.onclick = function () {
+  let R = Math.floor(Math.random() * 256);
+  let G = Math.floor(Math.random() * 256);
+  let B = Math.floor(Math.random() * 256);
+  color = `rgb(${R}, ${B}, ${G})`;
+}
